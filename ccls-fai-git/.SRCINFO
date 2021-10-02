@@ -1,0 +1,20 @@
+pkgbase = ccls-fai-git
+	pkgdesc = C/C++ language server supporting cross references, hierarchies, completion and semantic highlighting
+	pkgver = r1935.6d9af49f
+	pkgrel = 1
+	url = https://github.com/FederAndInk/ccls
+	arch = x86_64
+	license = Apache
+	makedepends = cmake
+	makedepends = git
+	makedepends = llvm
+	depends = clang
+	depends = llvm-libs
+	conflicts = ccls
+	conflicts = ccls-git
+	conflicts = ccls-fai
+	conflicts = ccls-fai-git
+	source = git+https://github.com/FederAndInk/ccls.git#branch=perso
+	md5sums = SKIP
+
+pkgname = ccls-fai-git

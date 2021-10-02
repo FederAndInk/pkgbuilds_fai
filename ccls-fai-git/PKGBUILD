@@ -1,0 +1,37 @@
+# Maintainer: Fangrui Song <i at maskray.me>
+# Co-Maintainer: Shengyu Zhang <la@archlinuxcn.org>
+
+pkgname=ccls-fai-git
+_pkgname=ccls
+pkgver=r1935.6d9af49f
+pkgrel=1
+pkgdesc='C/C++ language server supporting cross references, hierarchies, completion and semantic highlighting'
+arch=('x86_64')
+url='https://github.com/FederAndInk/ccls'
+license=('Apache')
+depends=('clang' 'llvm-libs')
+makedepends=("cmake" "git" "llvm")
+conflicts=("ccls" "ccls-git" "ccls-fai" "ccls-fai-git")
+source=('git+https://github.com/FederAndInk/ccls.git#branch=perso')
+md5sums=('SKIP')
+
+pkgver() {
+  cd $_pkgname
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+  cd $_pkgname
+  git submodule update --init
+}
+
+build() {
+  cd $_pkgname
+  cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_COMPILER=clang++ -DCLANG_LINK_CLANG_DYLIB=on -DUSE_SYSTEM_RAPIDJSON=off
+  cmake --build build
+}
+
+package() {
+  cd $_pkgname/build
+  make DESTDIR="$pkgdir" install
+}
